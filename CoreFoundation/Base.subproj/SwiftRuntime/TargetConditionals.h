@@ -1,21 +1,17 @@
 // This source file is part of the Swift.org open source project
 //
-// Copyright (c) 2014 - 2015 Apple Inc. and the Swift project authors
+// Copyright (c) 2014 - 2021 Apple Inc. and the Swift project authors
 // Licensed under Apache License v2.0 with Runtime Library Exception
 //
-// See http://swift.org/LICENSE.txt for license information
-// See http://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
+// See https://swift.org/LICENSE.txt for license information
+// See https://swift.org/CONTRIBUTORS.txt for the list of Swift project authors
 //
 
 /*
      File:       TargetConditionals.h
  
-     Contains:   Autoconfiguration of TARGET_ conditionals for Mac OS X and iPhone
+     Contains:   Autoconfiguration of TARGET_ conditionals for various platforms
      
-                 Note:  TargetConditionals.h in 3.4 Universal Interfaces works
-                        with all compilers.  This header only recognizes compilers
-                        known to run on Mac OS X.
-  
 */
 
 #ifndef __TARGETCONDITIONALS__
@@ -24,16 +20,18 @@
 
     TARGET_CPU_*    
     These conditionals specify which microprocessor instruction set is being
-    generated.  At most one of these is true, the rest are false.
+    generated.  These are mutually exclusive, meaning that at most one of these
+    is true; the rest are false.
 
         TARGET_CPU_PPC          - Compiler is generating PowerPC instructions for 32-bit mode
         TARGET_CPU_PPC64        - Compiler is generating PowerPC instructions for 64-bit mode
-        TARGET_CPU_68K          - Compiler is generating 680x0 instructions
         TARGET_CPU_X86          - Compiler is generating x86 instructions
+        TARGET_CPU_X86_64       - Compiler is generating x86_64 instructions
         TARGET_CPU_ARM          - Compiler is generating ARM instructions
+        TARGET_CPU_ARM64        - Compiler is generating ARM64 (AArch64) instructions
         TARGET_CPU_MIPS         - Compiler is generating MIPS instructions
-        TARGET_CPU_SPARC        - Compiler is generating Sparc instructions
-        TARGET_CPU_ALPHA        - Compiler is generating Dec Alpha instructions
+        TARGET_CPU_MIPS64       - Compiler is generating MIPS instructions for 64-bit mode
+        TARGET_CPU_S390X        - Compiler is generating z/Architecture instructions
         TARGET_CPU_WASM32       - Compiler is generating WebAssembly instructions for 32-bit mode
 
 
@@ -41,35 +39,29 @@
     These conditionals specify in which Operating System the generated code will
     run.  Indention is used to show which conditionals are evolutionary subclasses.  
     
-    The MAC/WIN32/UNIX conditionals are mutually exclusive.
-    The IOS/TV/WATCH conditionals are mutually exclusive.
+    The DARWIN/WINDOWS/LINUX/BSD/WASI conditionals are mutually exclusive.
     
     
-        TARGET_OS_WIN32           - Generated code will run under 32-bit Windows
-        TARGET_OS_UNIX            - Generated code will run under some Unix (not OSX) 
-           TARGET_OS_CYGWIN           - Generated code will run under 64-bit Cygwin
+        TARGET_OS_WINDOWS         - Generated code will run under Windows
+        TARGET_OS_LINUX           - Generated code will run under some Linux
+           TARGET_OS_CYGWIN           - Generated code will run under Cygwin
+           TARGET_OS_ANDROID          - Generated code will run under Android
         TARGET_OS_WASI            - Generated code will run under WebAssembly System Interface
-        TARGET_OS_MAC             - Generated code will run under Mac OS X variant
-           TARGET_OS_IPHONE          - Generated code for firmware, devices, or simulator 
-              TARGET_OS_IOS             - Generated code will run under iOS 
-              TARGET_OS_TV              - Generated code will run under Apple TV OS
-              TARGET_OS_WATCH           - Generated code will run under Apple Watch OS
-           TARGET_OS_SIMULATOR      - Generated code will run under a simulator
-           TARGET_OS_EMBEDDED       - Generated code for firmware
+        TARGET_OS_DARWIN          - Generated code will run under some Darwin, such as macOS or iOS
+        TARGET_OS_BSD             - Generated code will run under some BSD (not Apple)
        
-        TARGET_IPHONE_SIMULATOR   - DEPRECATED: Same as TARGET_OS_SIMULATOR
-        TARGET_OS_NANO            - DEPRECATED: Same as TARGET_OS_WATCH
+        TARGET_OS_WIN32           - Same as TARGET_OS_WINDOWS
+        TARGET_OS_MAC             - Same as TARGET_OS_DARWIN
+        TARGET_OS_OSX             - Same as TARGET_OS_DARWIN
 
     TARGET_RT_* 
     These conditionals specify in which runtime the generated code will
     run. This is needed when the OS and CPU support more than one runtime
-    (e.g. Mac OS X supports CFM and mach-o).
+    (e.g. macOS supports x86_64 and ARM64).
 
         TARGET_RT_LITTLE_ENDIAN - Generated code uses little endian format for integers
         TARGET_RT_BIG_ENDIAN    - Generated code uses big endian format for integers    
         TARGET_RT_64_BIT        - Generated code uses 64-bit pointers    
-        TARGET_RT_MAC_CFM       - TARGET_OS_MAC is true and CFM68K or PowerPC CFM (TVectors) are used
-        TARGET_RT_MAC_MACHO     - TARGET_OS_MAC is true and Mach-O/dlyd runtime is used
         
 
 ****************************************************************************************************/
